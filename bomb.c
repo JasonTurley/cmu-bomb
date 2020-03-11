@@ -1,27 +1,40 @@
 // Pseudo code of the reversed bomb executable
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int main(int argc, char *argv)
+#define BUF_SIZE (128)
+
+void read_line(char *buf)
 {
-
-
+    fgets(buf, BUF_SIZE, stdin);
+    buf[strlen(buf) - 1] = '\0';
 }
 
-/**
- * Checks if input string is the same as saved pass phrase.
- */
-int phase_1(char *s)
+void explode_bomb()
 {
-    if (s == "Public speaking is very easy.")
-        return 1;
-    else
+    printf("\nBOOM!!!\n");
+    printf("The bomb has blown up.\n");
+    exit(8);
+}
+
+int strings_not_equal(char *s, char *t)
+{
+    return strcmp(s, t);
+}
+
+void phase_1(char *buf)
+{
+    if (strings_not_equal(buf, "Public speaking is very easy."))
         explode_bomb();
 }
 
-/**
- * Expects six numbers as input. If given less, or if any are not an exact match, the bomb explodes.
- */
+/*
 int phase_2(char *nums)
 {
+    // TODO: make valid C code
+    read_six_numbers(nums);
+
     if (nums[0] != 1)
         explode_bomb()
 
@@ -35,6 +48,7 @@ int phase_2(char *nums)
 
 int phase_3(char *buf)
 {
+    // TODO: make valid C code
     int x, y;
     char c;
 
@@ -54,6 +68,31 @@ int phase_3(char *buf)
         n = 107;
     case 'o':
         n = 111;
+}
+*/
+
+void phase_defused()
+{
+    // TODO: implement me
+}
+
+int main(int argc, char *argv[])
+{
+    // TODO check arguments
+    char buf[BUF_SIZE];
+
+    printf("Welcome to my fiendish little bomb. You have 6 phases with\n");
+    printf("which to blow yourself up. Have a nice day!\n" );
+
+    // Phase 1
+    read_line(buf);
+    phase_1(buf);
+    phase_defused();
+    printf("Phase 1 defused. How about the next one?\n");
+
+    // Phase 2
+    read_line(buf);
 
 
+    return 0;
 }
