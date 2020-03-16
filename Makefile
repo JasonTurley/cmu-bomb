@@ -1,6 +1,6 @@
 # Setting up the compiler
 CC = gcc
-CFLAGS = -g -Wall -Wextra
+CFLAGS = -g -Wall -Wextra -Werror -pedantic
 
 # The build target executable
 TARGET = revbomb
