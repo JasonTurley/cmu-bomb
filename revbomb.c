@@ -127,9 +127,10 @@ void phase_3(char *buf)
     int x, y;
     char c, c_chk;
 
-    if (sscanf(buf, "%d %c %d", &x, &c, &y) != 3) {
-        fprintf(stderr, "TEST: did not enter valid format");
-        exit(8);
+    int retval = sscanf(buf, "%d %c %d", &x, &c, &y);
+
+    if (retval != 3) {
+        explode_bomb();
     }
 
     if (x > 7)
@@ -193,11 +194,15 @@ void phase_3(char *buf)
         explode_bomb();
 }
 
-
-int func4(int x)
+/**
+ * Calculates the fib sequence. Called by phase_4.
+ */
+int func4(int n)
 {
-    // fib sequence?
-    return x;
+    if (n <= 1)
+        return 1;
+
+    return func4(n - 1) + func4(n - 2);
 }
 
 void phase_4(char *s)
@@ -215,7 +220,7 @@ void phase_4(char *s)
 
     retval = func4(x);
 
-    if (retval != 55)
+    if (retval != 0x37) // 55
         explode_bomb();
 }
 
@@ -263,6 +268,10 @@ int main(int argc, char *argv[])
     read_line(buf, input_file);
     phase_3(buf);
     printf("Halfway there!\n");
+
+    read_line(buf, input_file);
+    phase_4(buf);
+    printf("So you got that one.  Try this one.\n");
 
     return 0;
 }
