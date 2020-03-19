@@ -9,6 +9,7 @@
 
 #define BUF_SIZE (128)
 
+
 /**
  * Catches the Ctrl-C (SIGINT) signal.
  */
@@ -26,6 +27,17 @@ void sig_handler(int signo)
         printf("OK. :-)\n");
 
         exit(16);
+    }
+}
+
+/**
+ * Sets up the bomb
+ */
+void initialize_bomb()
+{
+    if (signal(SIGINT, sig_handler) == SIG_ERR) {
+        fprintf(stderr, "Failed to handle SIGINT\n");
+        exit(1);
     }
 }
 
@@ -109,37 +121,78 @@ void phase_2(char *buf)
             explode_bomb();
     }
 }
-/*
-int phase_3(char *buf)
+
+void phase_3(char *buf)
 {
-    // TODO: make valid C code
-    int x = 0;
-    int y = 0;
-    char c;
+    int x, y;
+    char c, c_chk;
 
-    sscanf(buf, "%d %c %d", &x, &c, &y);
-
-    if (x != 7)
-        explode_bomb();
-
-    int n;
-    switch (c) {
-
-    case 'q':
-        n = 113;
-    case 'b':
-        n = 98;
-    case 'k':
-        n = 107;
-    case 'o':
-        n = 111;
-    default:
-        n = 0;
+    if (sscanf(buf, "%d %c %d", &x, &c, &y) != 3) {
+        fprintf(stderr, "TEST: did not enter valid format");
+        exit(8);
     }
 
-    return n;
+    if (x > 7)
+        explode_bomb();
+
+    switch (x)
+    {
+        case 0:
+            c_chk = 0x71;   // 'q'
+            if (y != 0x309) // 777
+                explode_bomb();
+            break;
+
+        case 1:
+            c_chk = 0x62;   // 'b'
+            if (y != 0xd6)
+                explode_bomb();
+            break;
+
+        case 2:
+            c_chk = 0x62;   // 'b'
+            if (y != 0x2f3)
+                explode_bomb();
+            break;
+
+        case 3:
+            c_chk = 0x6b;   // 'k'
+            if (y != 0xfb)   // 160
+                explode_bomb();
+            break;
+
+        case 4:
+            c_chk = 0x6f;   // 'o'
+            if (y != 0xa0)
+                explode_bomb();
+            break;
+
+        case 5:
+            c_chk = 0x74;
+            if (y != 0x1ca)
+                explode_bomb();
+            break;
+
+        case 6:
+            c_chk = 0x76;
+            if (y != 0x30c)
+                explode_bomb();
+            break;
+
+        case 7:
+            c_chk = 0x62;
+            if (y != 0x20c)
+                explode_bomb();
+            break;
+
+        default:
+            explode_bomb();
+    }
+
+    if (c != c_chk)
+        explode_bomb();
 }
-*/
+
 
 int func4(int x)
 {
@@ -191,11 +244,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Setup signal handler
-    if (signal(SIGINT, sig_handler) == SIG_ERR) {
-        fprintf(stderr, "Failed to handle SIGINT\n");
-        exit(1);
-    }
+    initialize_bomb();
 
     printf("Welcome to my fiendish little bomb. You have 6 phases with\n");
     printf("which to blow yourself up. Have a nice day!\n" );
@@ -210,6 +259,10 @@ int main(int argc, char *argv[])
     read_line(buf, input_file);
     phase_2(buf);
     printf("That's number 2.  Keep going!\n");
+
+    read_line(buf, input_file);
+    phase_3(buf);
+    printf("Halfway there!\n");
 
     return 0;
 }
