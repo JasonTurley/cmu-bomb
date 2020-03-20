@@ -122,6 +122,10 @@ void phase_2(char *buf)
     }
 }
 
+/**
+ * The third phase of the binary bomb game.
+ *
+ */
 void phase_3(char *buf)
 {
     int x, y;
@@ -205,6 +209,10 @@ int func4(int n)
     return func4(n - 1) + func4(n - 2);
 }
 
+/**
+ * The fourth phase of the binary bomb game.
+ *
+ */
 void phase_4(char *s)
 {
     int x = 0;
@@ -227,6 +235,30 @@ void phase_4(char *s)
 void phase_defused()
 {
     // TODO: implement me
+}
+
+/**
+ * The fifth phase of the binary bomb game.
+ *
+ */
+void phase_5(char *buf)
+{
+    int len = string_length(buf);
+
+    if (len != 6)
+        explode_bomb();
+
+    edx = 0
+    ecx
+
+    esi = "isrveawhobpnutfg\260\001"""
+
+    for (edx; edx <= 5; edx++)
+
+        al = edx+ebx*1
+        edx+ecx*1 = al
+
+    strings_not_equal(eax, "giants")
 }
 
 int main(int argc, char *argv[])
