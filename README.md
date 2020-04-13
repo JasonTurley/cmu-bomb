@@ -8,6 +8,7 @@ I am not a CMU student, this lab is freely availble online for all to download.
 - bomb: binary executable 
 - revbomb.c: my reverse engineered each phase into C code
 - revbomb: my reverse engineered executable
+- answers.txt: answers to each phase of the binary bomb
 
 ## What I learned
 By solving the 6 phases of this lab I have learned:
